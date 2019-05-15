@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hirata.shigeyoshi.techacademy.qa_app">
+          package="hirata.shigeyoshi.techacademy.qa_app">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -9,6 +12,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".QuestionSendActivity">
+        </activity>
+        <activity android:name=".SettingActivity">
+        </activity>
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
@@ -19,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity"/>
     </application>
 
 </manifest>
