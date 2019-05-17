@@ -1,6 +1,5 @@
 package hirata.shigeyoshi.techacademy.qa_app
 
-
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -25,7 +24,7 @@ class SettingActivity : AppCompatActivity() {
         // Preferenceから表示名を取得してEditTextに反映させる
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         val name = sp.getString(NameKEY, "")
-        val nameText = findViewById(R.id.nameText)
+        val nameText = findViewById<EditText>(R.id.nameText)
         nameText.setText(name)
 
         mDataBaseReference  = FirebaseDatabase.getInstance().reference
@@ -69,4 +68,3 @@ class SettingActivity : AppCompatActivity() {
         }
     }
 }
-
