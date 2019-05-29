@@ -47,6 +47,7 @@ class QuestionDetailActivity : AppCompatActivity() {
             mAdapter.notifyDataSetChanged()
         }
 
+
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
 
         }
@@ -74,6 +75,54 @@ class QuestionDetailActivity : AppCompatActivity() {
 
         title = mQuestion.title
 
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+        // 課題
+        // ログイン済みのユーザーを取得する
+        val user = FirebaseAuth.getInstance().currentUser
+
+        if (user == null) {
+            // ログインしていなければログイン画面に遷移させる
+            //val intent = Intent(applicationContext, LoginActivity::class.java)
+            //startActivity(intent)
+            like.hide()
+
+        } else {
+            // Questionを渡して回答作成画面を起動する
+            // --- ここから ---
+            //val intent = Intent(applicationContext, AnswerSendActivity::class.java)
+            //intent.putExtra("question", mQuestion)
+            //startActivity(intent)
+            // --- ここまで ---
+            like.show()
+        }
+
+
+        */
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Listviewの準備
         mAdapter = QuestionDetailListAdapter(this, mQuestion)
         listView.adapter = mAdapter
@@ -89,9 +138,63 @@ class QuestionDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 // Questionを渡して回答作成画面を起動する
-                // TODO:
+                // --- ここから ---
+                val intent = Intent(applicationContext, AnswerSendActivity::class.java)
+                intent.putExtra("question", mQuestion)
+                startActivity(intent)
+                // --- ここまで ---
             }
         }
+
+
+
+
+
+
+        /*
+        // 課題
+        like.setOnClickListener {
+            // ログイン済みのユーザーを取得する
+            val user = FirebaseAuth.getInstance().currentUser
+
+            if (user == null) {
+                // ログインしていなければログイン画面に遷移させる
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+
+                var mFavorite = false
+
+
+
+
+                // Questionを渡して回答作成画面を起動する
+                // --- ここから ---
+                //val intent = Intent(applicationContext, AnswerSendActivity::class.java)
+                //intent.putExtra("question", mQuestion)
+                //startActivity(intent)
+                // --- ここまで ---
+
+
+
+
+
+
+            }
+        } */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         val databaseReference = FirebaseDatabase.getInstance().reference
         mAnswerRef = databaseReference.child(ContentsPATH).child(mQuestion.genre.toString()).child(mQuestion.questionUid).child(
