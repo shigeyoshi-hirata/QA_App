@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     }
 
             val answerArrayList = ArrayList<Answer>()
-            val answerMap = map["answers"] as Map<String, String>
+            val answerMap = map["answers"] as Map<String, String>?
             if (answerMap != null) {
                 for (key in answerMap.keys) {
                     val temp = answerMap[key] as Map<String, String>
@@ -218,6 +218,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             mToolbar.title = "コンピューター"
             mGenre = 4
         }
+
+
+
+        else if (id == R.id.nav_favorite) {
+            mToolbar.title = "お気に入り"
+            // mGenre = 4
+        }
+
+
+
+
+
+
+
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
