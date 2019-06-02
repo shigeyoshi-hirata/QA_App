@@ -21,6 +21,8 @@ import java.util.HashMap
 
 class QuestionDetailActivity : AppCompatActivity() {
 
+    private var mFavorite = false
+
     private lateinit var mQuestion: Question
     private lateinit var mAdapter: QuestionDetailListAdapter
     private lateinit var mAnswerRef: DatabaseReference
@@ -87,7 +89,7 @@ class QuestionDetailActivity : AppCompatActivity() {
 
 
 
-        /*
+
         // 課題
         // ログイン済みのユーザーを取得する
         val user = FirebaseAuth.getInstance().currentUser
@@ -105,11 +107,27 @@ class QuestionDetailActivity : AppCompatActivity() {
             //intent.putExtra("question", mQuestion)
             //startActivity(intent)
             // --- ここまで ---
+
+
+
+
+            // Firebaseに問い合せて、お気に入りになってるかを調べる。
+            // なってなければ
+            // お気に入りボタンを表示し、
+            // なっていれば
+            // 削除ボタンを表示する。
+            if (mFavorite) {
+                val like = findViewById<FloatingActionButton>(R.id.like)
+                like.setImageResource(R.drawable.like_pressed)
+            }
+
+
+
             like.show()
         }
 
 
-        */
+
 
 
 
@@ -151,22 +169,33 @@ class QuestionDetailActivity : AppCompatActivity() {
 
 
 
-        /*
+
         // 課題
         like.setOnClickListener {
             // ログイン済みのユーザーを取得する
             val user = FirebaseAuth.getInstance().currentUser
 
+
+
             if (user == null) {
                 // ログインしていなければログイン画面に遷移させる
-                val intent = Intent(applicationContext, LoginActivity::class.java)
-                startActivity(intent)
+                //val intent = Intent(applicationContext, LoginActivity::class.java)
+                //startActivity(intent)
             } else {
 
-                var mFavorite = false
+
+                val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                val databaseReference = FirebaseDatabase.getInstance().reference
+                val favoriteRef = databaseReference.child(FavoritesPATH).child(userId).child(mQuestion.questionUid.toString())
+                val data = HashMap<String, String>()
+                data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
+                favoriteRef.setValue(data, this)
+                
+                var mFavorite = true
 
 
-
+                // Firebaseに問い合せて、お気に入りになってるかを調べる。
+                // なってなければ
 
                 // Questionを渡して回答作成画面を起動する
                 // --- ここから ---
@@ -178,10 +207,8 @@ class QuestionDetailActivity : AppCompatActivity() {
 
 
 
-
-
             }
-        } */
+        }
 
 
 
