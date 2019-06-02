@@ -139,7 +139,7 @@ class QuestionDetailActivity : AppCompatActivity() {
                     data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
                     favoriteRef.removeValue()
 
-                    var mFavorite = false
+                    mFavorite = false
                     val like = findViewById<FloatingActionButton>(R.id.like)
                     like.setImageResource(R.drawable.like)
                     like.show()
@@ -152,7 +152,7 @@ class QuestionDetailActivity : AppCompatActivity() {
                     data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
                     favoriteRef.setValue(data)
 
-                    var mFavorite = true
+                    mFavorite = true
                     val like = findViewById<FloatingActionButton>(R.id.like)
                     like.setImageResource(R.drawable.like_pressed)
                     like.show()
