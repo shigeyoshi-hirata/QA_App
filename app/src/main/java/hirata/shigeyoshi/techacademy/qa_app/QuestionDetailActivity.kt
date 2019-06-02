@@ -80,51 +80,19 @@ class QuestionDetailActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
-
-
-
-
-
         // 課題
         // ログイン済みのユーザーを取得する
         val user = FirebaseAuth.getInstance().currentUser
 
         if (user == null) {
-            // ログインしていなければログイン画面に遷移させる
-            //val intent = Intent(applicationContext, LoginActivity::class.java)
-            //startActivity(intent)
-            //like.setVisibility(View.INVISIBLE)
-            like.visibility = View.INVISIBLE
-            //like.hide()
-
+            like.hide()
         } else {
-
             if (mFavorite) {
                 val like = findViewById<FloatingActionButton>(R.id.like)
                 like.setImageResource(R.drawable.like_pressed)
             }
-
             like.show()
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // Listviewの準備
@@ -152,10 +120,6 @@ class QuestionDetailActivity : AppCompatActivity() {
 
 
 
-
-
-
-
         // 課題
         like.setOnClickListener {
             // ログイン済みのユーザーを取得する
@@ -167,17 +131,20 @@ class QuestionDetailActivity : AppCompatActivity() {
                 //startActivity(intent)
             } else {
 
-
                 if (mFavorite) {
+                    val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                    val databaseReference = FirebaseDatabase.getInstance().reference
+                    val favoriteRef = databaseReference.child(FavoritesPATH).child(userId).child(mQuestion.questionUid.toString())
+                    val data = HashMap<String, String>()
+                    data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
+                    favoriteRef.removeValue()
 
                     var mFavorite = false
                     val like = findViewById<FloatingActionButton>(R.id.like)
                     like.setImageResource(R.drawable.like)
                     like.show()
 
-
                 } else {
-
                     val userId = FirebaseAuth.getInstance().currentUser!!.uid
                     val databaseReference = FirebaseDatabase.getInstance().reference
                     val favoriteRef = databaseReference.child(FavoritesPATH).child(userId).child(mQuestion.questionUid.toString())
@@ -186,29 +153,10 @@ class QuestionDetailActivity : AppCompatActivity() {
                     favoriteRef.setValue(data)
 
                     var mFavorite = true
-
                     val like = findViewById<FloatingActionButton>(R.id.like)
                     like.setImageResource(R.drawable.like_pressed)
                     like.show()
-
                 }
-
-
-
-
-
-                // Firebaseに問い合せて、お気に入りになってるかを調べる。
-                // なってなければ
-
-                // Questionを渡して回答作成画面を起動する
-                // --- ここから ---
-                //val intent = Intent(applicationContext, AnswerSendActivity::class.java)
-                //intent.putExtra("question", mQuestion)
-                //startActivity(intent)
-                // --- ここまで ---
-
-
-
 
             }
         }
