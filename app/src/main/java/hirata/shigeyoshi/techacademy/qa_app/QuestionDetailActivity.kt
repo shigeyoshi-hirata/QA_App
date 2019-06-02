@@ -98,30 +98,16 @@ class QuestionDetailActivity : AppCompatActivity() {
             // ログインしていなければログイン画面に遷移させる
             //val intent = Intent(applicationContext, LoginActivity::class.java)
             //startActivity(intent)
-            like.hide()
+            //like.setVisibility(View.INVISIBLE)
+            like.visibility = View.INVISIBLE
+            //like.hide()
 
         } else {
-            // Questionを渡して回答作成画面を起動する
-            // --- ここから ---
-            //val intent = Intent(applicationContext, AnswerSendActivity::class.java)
-            //intent.putExtra("question", mQuestion)
-            //startActivity(intent)
-            // --- ここまで ---
 
-
-
-
-            // Firebaseに問い合せて、お気に入りになってるかを調べる。
-            // なってなければ
-            // お気に入りボタンを表示し、
-            // なっていれば
-            // 削除ボタンを表示する。
             if (mFavorite) {
                 val like = findViewById<FloatingActionButton>(R.id.like)
                 like.setImageResource(R.drawable.like_pressed)
             }
-
-
 
             like.show()
         }
@@ -175,8 +161,6 @@ class QuestionDetailActivity : AppCompatActivity() {
             // ログイン済みのユーザーを取得する
             val user = FirebaseAuth.getInstance().currentUser
 
-
-
             if (user == null) {
                 // ログインしていなければログイン画面に遷移させる
                 //val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -184,14 +168,33 @@ class QuestionDetailActivity : AppCompatActivity() {
             } else {
 
 
-                val userId = FirebaseAuth.getInstance().currentUser!!.uid
-                val databaseReference = FirebaseDatabase.getInstance().reference
-                val favoriteRef = databaseReference.child(FavoritesPATH).child(userId).child(mQuestion.questionUid.toString())
-                val data = HashMap<String, String>()
-                data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
-                favoriteRef.setValue(data, this)
-                
-                var mFavorite = true
+                if (mFavorite) {
+
+                    var mFavorite = false
+                    val like = findViewById<FloatingActionButton>(R.id.like)
+                    like.setImageResource(R.drawable.like)
+                    like.show()
+
+
+                } else {
+
+                    val userId = FirebaseAuth.getInstance().currentUser!!.uid
+                    val databaseReference = FirebaseDatabase.getInstance().reference
+                    val favoriteRef = databaseReference.child(FavoritesPATH).child(userId).child(mQuestion.questionUid.toString())
+                    val data = HashMap<String, String>()
+                    data["genre"] = mQuestion.genre.toString()// 質問のジャンル番号
+                    favoriteRef.setValue(data)
+
+                    var mFavorite = true
+
+                    val like = findViewById<FloatingActionButton>(R.id.like)
+                    like.setImageResource(R.drawable.like_pressed)
+                    like.show()
+
+                }
+
+
+
 
 
                 // Firebaseに問い合せて、お気に入りになってるかを調べる。
